@@ -1,0 +1,41 @@
+ ----------------------------------------------------
+ Feuille de Rte Jeu de Cibles Cowboys avec Fusil Nerf
+ ----------------------------------------------------
+
+Relais au repos: circuit ouvert par interrupteur A
+Programme en attente de msg Début de jeu (sans timeout)
+
+-- Si appui sur New Game (type de jeu avec game over):
+ 433Mhz -> envoi msg Début de jeu
+ tous les cowboys se lèvent pour confirmer la réception, puis redescendent
+
+-- Début du jeu:
+ $temps = 15sec
+ Cowboy en position basse
+ 433Mhz: attente reception msg de GameOver avec un timeout aléatoire
+ Cowboy se lève
+ pause($temps / 1.04)
+ 1.04 donne 3x chaque sec, ou diviser par 1.03 pr que le cowboy reste debout 4x chaque sec (4x 15,xx sec, puis 4x 14,xx sec)
+
+si mic détecte un son:
+ Cowboy redescend
+else
+ Allume led 12v qques millisec (+son??)
+ 433Mhz envoie msg GameOver (envoie plusieurs msg durant 20 sec)
+ Cowboy reste debout
+
+-- Quand cowboy est en bas, en attente de msg 433Mhz:
+si recoit msg GameOver:
+ Cowboy se lève pour confirmer la fin du jeu
+ Allume led 12v qques millisec
+ Puis redescend
+ Attente de msg de Début de jeu (sans timeout)
+
+
+-- Sources:
+img cowboys: https://www.hugolescargot.com
+tuto de Retroetgeek: https://ouiaremakers.com/posts/tutoriel-diy-westernduino-arduino-tutoriel-jeu-de-tir
+et: https://retroetgeek.com/geek/arduino-tutoriel-jeu-de-tir-westernduino/
+tuto 433Mhz: https://www.carnetdumaker.net/articles/communiquer-sans-fil-en-433mhz-avec-la-bibliotheque-virtualwire-et-une-carte-arduino-genuino
+modules de construction: https://www.makeblock.com
+
